@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+{% load staticfiles  %}
+{% block subtitle %}
+    智能决策支持
+{% endblock %}
+{% block description%}
+   分析给定区域不同影响因子对空气质量的影响程度等,为智能决策提供支持
+{% endblock %}
+{% block content %}
+<script src="{% static "js/echarts.min.js" %}"></script>
+
+    <style>
+    #map {
+        position: relative;
+        height: 900px;
+        width: 900px;
+      }
+    #popup{
+        width: 150px;
+    }
+    </style>
+
+    <div class="container">
+         <div class="row">
+
+            <div class="col-md-9">
+                <div class="alert alert-success" role="alert">
+                    POI整治建议:该地区路网密度较低,且空气质量综合评价较高,对该地区具有污染性质的POI进行整治必要性不大
+                    </div>
+                <div class="alert alert-warning" role="alert">
+                    道路限行建议:该地区路网密度较低,且空气质量综合评价较高,对该地区实行限行必要性不大
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+    <div class="row">
+       <div class="col-md-6">
+            <div id="map" class="map"></div>
+       </div>
+
+    </div>
+    </div>
+
+
+        <link href="{% static "css/ol.css" %}" rel="stylesheet">
+    <script src="{% static "js/openlayer.js" %}" type="text/javascript"></script>
+    <script src="{% static "js/tools/tool.js" %}" type="text/javascript"></script>
+
+
+
+    <script>
+    var day = 725;
+    var factor = "aqi_fin";
+
+
+      var source = new ol.source.Vector({wrapX: false});
+
+      var vector = new ol.layer.Vector({
+        source: source,
+        style: new ol.style.Style({
+          fill: new ol.style.Fill({
+            color: 'rgba(255, 255, 255, 0.2)'
+          }),
+          stroke: new ol.style.Stroke({
+            color: '#ffcc33',
+            width: 2
+          }),
+          image: new ol.style.Circle({
+            radius: 7,
+            fill: new ol.style.Fill({
+              color: '#000000'
+            })
+          })
+        })
+      });
+
+
+    //添加路线
+    function getPathLayer(wkts){
+
+      var format = new ol.format.WKT();
+      var feature = format.readFeature(wkts, {
+        dataProjection: 'EPSG:4326',
+        featureProjection: 'EPSG:3857'
+      });
+
+      var vector = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          features: [feature]
+        }),
+          style: new ol.style.Style({
+          stroke: new ol.style.Stroke({
+            color: '#000000',
+            width: 2
+          })
+        })
+      });
+      return vector;
+
+    }
+
+
+
+
+    //设置地图
+    var raster = new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+    var map = new ol.Map({
+        layers: [raster,vector],
+        target: 'map',
+        view: new ol.View({
+          center: ol.proj.fromLonLat([116.303406,39.916263]),
+          zoom: 11
+        })
+      });
+    var draw; // global so we can remove it later
+      function addInteraction() {
+          var geometryFunction;
+
+          draw = new ol.interaction.Draw({
+            source: source,
+            type:("Point"),
+          });
+          map.addInteraction(draw);
+
+      }
+
+      addInteraction();
+
+    //添加网格
+    function createGrideLayer(url,fac){
+        var wkt =  $.ajax({
+               type: "GET",
+               url: url,
+               data: "",
+               async: false
+
+            }).responseText;
+        var wkts = wkt.split(";")
+        var features = new Array()
+        for(var i=0;i<wkts.length;i++){
+            var format = new ol.format.WKT();
+            var temps = wkts[i].split("&")
+            var feature = format.readFeature(temps[0], {
+                    dataProjection: 'EPSG:4326',
+                    featureProjection: 'EPSG:3857'
+                });
+            var ss = factor2colorstr(factor,temps[1],0.4);
+            var stl = new ol.style.Style({
+                fill: new ol.style.Fill({
+                color: ss
+                }),
+                stroke: new ol.style.Stroke({
+                color: 'rgba(255,255,255,0.2)',
+                width: 1
+                }),
+                text: new ol.style.Text({
+                font: '12px Calibri,sans-serif',
+                fill: new ol.style.Fill({
+                    color: '#000'
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#fff',
+                    width: 3
+                })
+                })
+                });
+            feature.setStyle(stl)
+            features[i] = feature
+        }
+
+
+        var vector = new ol.layer.Vector({
+                  source: new ol.source.Vector({features: features
+                        })
+                    });
+        return vector;
+    }
+
+    var gvl = createGrideLayer("/factorGrid/?day="+day+"&factor="+factor,factor);
+    map.addLayer(gvl);
+
+    var clickcount = 0;
+    var p1,p2;
+      map.on('click', function(evt) {
+          var coordinate = evt.coordinate;
+          var hdms = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
+          if (hdms[0] < 116.0975 || hdms[0] > 116.554 || hdms[1] < 39.7128 || hdms[1] > 40.123) {
+              $(element).popover('destroy');
+              return;
+          }
+
+          clickcount ++;
+          if(clickcount%2==1){
+              p1 = hdms;
+          }else{
+              p2 = hdms;
+              var wkt = 'LINESTRING(116.18591308593751 39.930274285072954,116.191062927246 '+
+'39.92316565698772,116.20891571044922 39.91236966217849,116.21852874755858 '+
+'39.90868283513285,116.22573852539064 39.90868283513285,116.23260498046876 '+
+'39.90920953685986,116.23706817626953 39.90920953685986,116.24359130859376 '+
+'39.90868283513285,116.25217437744142 39.90868283513285,116.25835418701172 '+
+'39.909472886204725,116.26281738281251 39.910789617742836,116.26556396484376 '+
+'39.9168462568137,116.27449035644531 39.92369224734412,116.27792358398438 '+
+'39.927904824392755,116.28032684326172 39.93159061667831,116.28616333007814 '+
+'39.93553945960994,116.28890991210939 39.94027777039034,116.2950897216797 '+
+'39.945015753084164,116.29852294921875 39.94738462139563,116.29955291748047 '+
+'39.95528025668898,116.30092620849608 39.960543507200356,116.30367279052734 39.964227541526895)';
+              map.addLayer(getPathLayer(wkt));
+          }
+
+{#          var colIncre = (116.554 - 116.0975) / 39;#}
+{#          var rowIncre = (40.123 - 39.7128) / 35;#}
+{#          var colIndex = parseInt((hdms[0] - 116.0975) / colIncre);#}
+{#          var rowIndex = parseInt((40.123 - hdms[1]) / rowIncre);#}
+{#          $("#rownum").html(rowIndex);#}
+{#          $("#colnum").html(colIndex);#}
+{#          var date = day;#}
+      })
+    </script>
+
+{% endblock %}

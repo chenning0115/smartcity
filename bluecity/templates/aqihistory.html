@@ -1,0 +1,129 @@
+<script type="text/javascript">
+
+    function  DateAdd(interval,number,date)
+{
+    switch(interval)
+    {
+        case  "y"  :  {
+            date.setFullYear(date.getFullYear()+number);
+            return  date;
+            break;
+        }
+        case  "q"  :  {
+            date.setMonth(date.getMonth()+number*3);
+            return  date;
+            break;
+        }
+        case  "m"  :  {
+            date.setMonth(date.getMonth()+number);
+            return  date;
+            break;
+        }
+        case  "d"  :  {
+            date.setDate(date.getDate()+number);
+            return  date;
+            break;
+        }
+        default  :  {
+            date.setDate(date.getDate()+number);
+            return  date;
+            break;
+        }
+    }
+}
+
+var aqihistoryChart = echarts.init(document.getElementById('aqihistory'));
+aqihistoryChart.showLoading();
+function aqihistoryfun(daydata) {
+    aqihistoryChart.hideLoading();
+    daydata = eval("("+daydata+")");
+    base = new Date(daydata.year,daydata.month-1,daydata.day);
+    oneDay = 24 * 3600 * 1000;
+    data = daydata.data;
+    date=[];
+    date.push([daydata.year, daydata.month, daydata.day].join('-'));
+    for (var i = 1; i < daydata.len; i++) {
+        var now =  DateAdd("d",1,base);
+
+        date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('-'));
+    }
+
+    option = {
+        backgroundColor: '',
+    	    tooltip: {
+    	        trigger: 'axis'
+    	    },
+    	    title: {
+    	        left: 'center',
+    	        text: '北京市空气污染指数(AQI)级别历史信息',
+                textStyle:{
+                   color:'#ffffff'
+                 },
+    	    },
+    	    legend: {
+    	        top: 'bottom',
+    	        data:['coalmine accidents']
+    	    },
+    	    toolbox: {
+    	        show: true,
+    	        orient:'vertical',
+    	        feature: {
+    	            dataView: {show: true, readOnly: false},
+    	            magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+    	            restore: {show: true},
+    	            saveAsImage: {show: true}
+    	        }
+    	    },
+    	    xAxis: {
+    	        type: 'category',
+    	        boundaryGap: false,
+    	        data: date,
+                axisLabel:{
+                textStyle:{
+                    color:"#ffffff"
+                }
+            }
+    	    },
+    	    yAxis: {
+    	        type: 'value',
+    	        boundaryGap: [0, '100%']
+    	    },
+    	    dataZoom: [{
+    	        type: 'inside',
+    	        start: 0,
+    	        end: 10
+    	    }, {
+    	        start: 0,
+    	        end: 10
+    	    }],
+    	    series: [
+    	        {
+    	            name:'AQI',
+    	            type:'line',
+    	            smooth:true,
+    	            symbol: 'none',
+    	            sampling: 'average',
+    	            itemStyle: {
+    	                normal: {
+    	                    color: 'rgb(255, 70, 131)'
+    	                }
+    	            },
+    	            areaStyle: {
+    	                normal: {
+    	                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+    	                        offset: 0,
+    	                        color: 'rgb(255, 158, 68)'
+    	                    }, {
+    	                        offset: 1,
+    	                        color: 'rgb(255, 70, 131)'
+    	                    }])
+    	                }
+    	            },
+    	            data: data
+    	        }
+    	    ]
+    	};
+    	   aqihistoryChart.setOption(option);
+
+    }
+        </script>

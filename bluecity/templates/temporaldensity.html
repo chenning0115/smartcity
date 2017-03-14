@@ -1,0 +1,82 @@
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts图表
+
+        var temporaldensityChart = echarts.init(document.getElementById('temporaldensity'));
+        function temporaldensityfun(mydata)
+        {
+            mydata = eval("("+mydata+")");
+            var rowstr = mydata.rowstr;
+             var colstr = mydata.colstr;
+             var data = mydata.data;
+             data = data.map(function (item) {
+                 return [item[1], item[0], item[2] || '-'];
+             });
+
+             option = {
+                 backgroundColor: '',
+                 title : {
+                    text: '时间密度图',
+                    subtext: '',
+                    x:'center',
+                    textStyle:{
+                   color:'#ffffff'
+                 },
+    },
+                 tooltip: {
+                     position: 'top'
+                 },
+                 animation: false,
+                 grid: {
+                     height: '60%',
+                     y: '10%'
+                 },
+                 xAxis: {
+                     type: 'category',
+                     data: rowstr,
+                     axisLabel:{
+                textStyle:{
+                    color:"#ffffff"
+                }
+            }
+                 },
+                 yAxis: {
+                     type: 'category',
+                     data: colstr,
+                     axisLabel:{
+                textStyle:{
+                    color:"#ffffff"
+                }
+            }
+                 },
+                 visualMap: {
+                     min: 1,
+                     max: 6,
+                     calculable: true,
+                     orient: 'horizontal',
+                     left: 'center',
+                     bottom: '10%',
+                     textStyle:{
+                    color:"#ffffff"
+                }
+                 },
+                 series: [{
+                     name: 'Punch Card',
+                     type: 'heatmap',
+                     data: data,
+                     label: {
+                         normal: {
+                             show: true
+                         }
+                     },
+                     itemStyle: {
+                         emphasis: {
+                             shadowBlur: 10,
+                             shadowColor: 'rgba(0, 0, 0, 0.5)'
+                         }
+                     }
+                 }]
+             };
+             temporaldensityChart.setOption(option);
+        }
+
+        </script>

@@ -1,0 +1,144 @@
+<script type="text/javascript">
+var yearlinechart = echarts.init(document.getElementById('yearlinechart'));
+{#yearlinechart.showLoading();#}
+function yearlinechartfun(mydata) {
+{#    yearlinechart.hideLoading();#}
+    var dd = eval("(" + mydata + ")");
+    option = {
+        title: {
+            text: '空气质量年度变化',
+            subtext: '总体趋势变化',
+            textStyle:{
+                   color:'#ffffff'
+                 },
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['1级', '2级', '3级', '4级', '5级', '6级']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                data: ['2014', '2015']
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '1',
+                type: 'bar',
+                data: dd[0],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            },
+            {
+                name: '2',
+                type: 'bar',
+                data: dd[1],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            },
+            {
+                name: '3',
+                type: 'bar',
+                data: dd[2],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            },
+            {
+                name: '4',
+                type: 'bar',
+                data: dd[3],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            },
+            {
+                name: '5',
+                type: 'bar',
+                data: dd[4],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            },
+            {
+                name: '6',
+                type: 'bar',
+                data: dd[5],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            },
+        ]
+    };
+
+    yearlinechart.setOption(option);
+}
+</script>

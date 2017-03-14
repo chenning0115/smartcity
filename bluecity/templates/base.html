@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Skyseeker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Le styles -->
+    {% load staticfiles  %}
+    <script type="text/javascript" src="{% static "js/jquery.js" %}"></script>
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <link rel="stylesheet" href="{% static "css/loader-style.css" %}">
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+    <script type="text/javascript" src="{% static "js/preloader.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/app.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/load.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/main.js" %}"></script>
+    <style type="text/css">
+    canvas {
+        width: 100% !important;
+        max-width: 1000px;
+        height: auto !important;
+    }
+    </style>
+
+
+
+
+
+
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="{% static "ico/minus.png" %}">
+</head>
+
+<body><div id="awwwards" class="right black"><a href="http://www.awwwards.com/best-websites/apricot-navigation-admin-dashboard-template" target="_blank">best websites of the world</a></div>
+   <!-- TOP NAVBAR -->
+    <nav role="navigation" class="navbar navbar-static-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle" type="button">
+                    <span class="entypo-menu"></span>
+                </button>
+                <button class="navbar-toggle toggle-menu-mobile toggle-left" type="button">
+                    <span class="entypo-list-add"></span>
+                </button>
+
+
+
+
+                <div id="logo-mobile" class="visible-xs">
+                   <h1>S<a href="/bluecity/home"> kyseeker</a></h1>
+                </div>
+
+            </div>
+
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+
+                <div id="nt-title-container" class="navbar-left running-text visible-lg">
+                    <ul class="date-top">
+                        <li class="entypo-calendar" style="margin-right:5px"></li>
+                        <li id="Date"></li>
+
+
+                    </ul>
+
+                    <ul id="digital-clock" class="digital">
+                        <li class="entypo-clock" style="margin-right:5px"></li>
+                        <li class="hour"></li>
+                        <li>:</li>
+                        <li class="min"></li>
+                        <li>:</li>
+                        <li class="sec"></li>
+                        <li class="meridiem"></li>
+                    </ul>
+
+                </div>
+
+                <ul style="margin-right:0;" class="nav navbar-nav navbar-right">
+                    <li>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <img alt="" class="admin-pic img-circle" src="http://a1.att.hudong.com/07/67/01300000345623123618670981155.jpg">Skyseeker Group<b class="caret"></b>
+                        </a>
+                        <ul style="margin-top:14px;" role="menu" class="dropdown-setting dropdown-menu">
+                            <li>
+                                <a href="#">
+                                    <span class="entypo-user"></span>&#160;&#160;Liang Ze</a>
+                            </li>
+                             <li>
+                                <a href="#">
+                                    <span class="entypo-user"></span>&#160;&#160;Chen Ning</a>
+                            </li>
+                             <li>
+                                <a href="#">
+                                    <span class="entypo-user"></span>&#160;&#160;Yi Chao</a>
+                            </li>
+                             <li>
+                                <a href="#">
+                                    <span class="entypo-user"></span>&#160;&#160;Li Delong</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="icon-gear"></span>&#160;&#160;Setting</a>
+                        <ul role="menu" class="dropdown-setting dropdown-menu">
+
+                            <li class="theme-bg">
+                                <div id="button-bg"></div>
+                                <div id="button-bg2"></div>
+                                <div id="button-bg3"></div>
+                                <div id="button-bg5"></div>
+                                <div id="button-bg6"></div>
+                                <div id="button-bg7"></div>
+                                <div id="button-bg8"></div>
+                                <div id="button-bg9"></div>
+                                <div id="button-bg10"></div>
+                                <div id="button-bg11"></div>
+                                <div id="button-bg12"></div>
+                                <div id="button-bg13"></div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="hidden-xs">
+                        <a class="toggle-left" href="#">
+                            <span style="font-size:20px;" class="entypo-list-add"></span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <!-- /END OF TOP NAVBAR -->
+
+    <!-- SIDE MENU -->
+    <div id="skin-select">
+        <div id="logo">
+         <a href="/bluecity/home"><h1>Skyseeker</h1></a>
+        </div>
+
+        <a id="toggle">
+            <span class="entypo-menu"></span>
+        </a>
+
+      <div class="dark">
+            <form action="#">
+                <span>
+                    <input type="text" name="search" value="" class="search rounded id_search" placeholder="Search Menu..." autofocus="">
+                </span>
+            </form>
+        </div>
+
+        <div class="search-hover">
+            <form id="demo-2">
+                <input type="search" placeholder="Search Menu..." class="id_search">
+            </form>
+        </div>
+
+
+        <div class="skin-part">
+            <div id="tree-wrap">
+                <div class="side-bar">
+                    <ul class="topnav menu-left-nest">
+                        <li>
+                            <a href="#" style="border-left:0px solid!important;" class="title-menu-left">
+
+                                <span>数据查询模块</span>
+                                <i data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i>
+
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="tooltip-tip ajax-load" href="#" title="数据查询">
+                                <i class="icon-document-edit"></i>
+                                <span>数据查询</span>
+
+                            </a>
+                            <ul>
+                                <li id="li_aqi">
+                                    <a id="a_aqi" class="tooltip-tip2 ajax-load"  title="AQI"><i class="entypo-doc-text"></i><span>AQI与影响因子</span></a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+
+                    <ul class="topnav menu-left-nest">
+                        <li>
+                            <a href="#" style="border-left:0px solid!important;" class="title-menu-left">
+
+                                <span>统计分析模块</span>
+                                <i data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i>
+
+                            </a>
+                        </li>
+
+                        <li id="li_analyse_time">
+                            <a class="tooltip-tip ajax-load" href="" title="时间序列分析">
+                                <i class="icon-window"></i>
+                                <span>时间序列分析</span>
+
+                            </a>
+                        </li>
+                        <li id="li_analyse_factor">
+                            <a class="tooltip-tip ajax-load" href="mail.html" title="影响因子分析">
+                                <i class="icon-mail"></i>
+                                <span>影响因子分析</span>
+
+                            </a>
+                        </li>
+
+                        <li id="li_decisionsupport">
+                            <a class="tooltip-tip ajax-load" href="icon.html" title="智能决策支持">
+                                <i class="icon-preview"></i>
+                                <span>智能决策支持</span>
+
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <ul id="menu-showhide" class="topnav menu-left-nest">
+                        <li id="li_realtimefineprediction">
+                            <a href="#" style="border-left:0px solid!important;" class="title-menu-left">
+
+                                <span>实时精细预测</span>
+                                <i data-toggle="tooltip" class="entypo-cog pull-right config-wrap"></i>
+
+                            </a>
+                        </li>
+                         <li id="li_bestpath">
+                            <a class="tooltip-tip ajax-load" href="icon.html" title="智能决策支持">
+                                <i class="icon-preview"></i>
+                                <span>基于AQI的最优路径选择</span>
+
+                            </a>
+                        </li>
+                    </ul>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END OF SIDE MENU -->
+
+
+
+    <!--  PAPER WRAP -->
+    <div class="wrap-fluid">
+        <div class="container-fluid paper-wrap bevel">
+
+
+
+
+
+            <!-- CONTENT -->
+            <!--TITLE -->
+            <div class="row">
+                <div id="paper-top">
+                    <div class="col-sm-3">
+                        <h2 class="tittle-content-header" >
+                            <i class="icon-graph-pie"></i>
+                            <span id="subtitle" style="color:#ffffff">{% block subtitle %}{% endblock %}
+                            </span>
+                        </h2>
+
+                    </div>
+
+                    <div class="col-sm-7">
+                        <div class="devider-vertical visible-lg"></div>
+                        <div class="tittle-middle-header">
+
+                            <div class="alert">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <span class="tittle-alert entypo-info-circled" style="color:#ffffff">
+                                <strong id="descrition">{% block description %}{% endblock %}</strong>
+                                </span>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="devider-vertical visible-lg"></div>
+                        <div class="btn-group btn-wigdet pull-right visible-lg">
+                            <div class="btn">
+                                Widget</div>
+                            <button data-toggle="dropdown" class="btn dropdown-toggle" type="button">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul role="menu" class="dropdown-menu">
+                                <li>
+                                    <a href="#">
+                                        <span class="entypo-plus-circled margin-iconic"></span>Add New</a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="entypo-heart margin-iconic"></span>Favorite</a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="entypo-cog margin-iconic"></span>Setting</a>
+                                </li>
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!--/ TITLE -->
+
+            <!-- BREADCRUMB -->
+            <ul id="breadcrumb">
+                <li>
+                    <span class="entypo-home"></span>
+                </li>
+                <li><i class="fa fa-lg fa-angle-right"></i>
+                </li>
+                <li style="color:#ffffff">
+                    当前选择行号:<span id="rownum"> {{ rownum }} </span>
+                    当前选择列号:<span id="colnum"> {{ colnum }} </span>
+                </li>
+
+            </ul>
+
+            <!-- END OF BREADCRUMB -->
+
+            {% block content %}
+            {% endblock %}
+
+
+            <!-- /END OF CONTENT -->
+
+
+
+            <!-- FOOTER -->
+            <div class="footer-space"></div>
+            <div id="footer">
+                <div class="devider-footer-left"></div>
+                <div class="time">
+                    <p id="spanDate">
+                    <p id="clock">
+                </div>
+                <div class="copyright" style="color: #FFFFFF;">Developed by Skyseeker Group @2016 PKU
+                    <span class="entypo-heart"></span><a href="http://www.cssmoban.com/" title="" target="_blank"></a> All Rights Reserved</div>
+                <div class="devider-footer"></div>
+
+            </div>
+            <!-- / END OF FOOTER -->
+
+
+        </div>
+    </div>
+    <!--  END OF PAPER WRAP -->
+    <!-- RIGHT SLIDER CONTENT -->
+    <div class="sb-slidebar sb-right">
+        <div class="right-wrapper">
+            <div class="row">
+                <h3>
+                    <span><i class="entypo-gauge"></i>&nbsp;&nbsp;MAIN WIDGET</span>
+                </h3>
+                <div class="col-sm-12">
+
+                    <div class="widget-knob">
+                        <span class="chart" style="position:relative" data-percent="86">
+                            <span class="percent"></span>
+                        </span>
+                    </div>
+                    <div class="widget-def">
+                        <b>Distance traveled</b>
+                        <br>
+                        <i>86% to the check point</i>
+                    </div>
+
+                    <div class="widget-knob">
+                        <span class="speed-car" style="position:relative" data-percent="60">
+                            <span class="percent2"></span>
+                        </span>
+                    </div>
+                    <div class="widget-def">
+                        <b>The average speed</b>
+                        <br>
+                        <i>30KM/h avarage speed</i>
+                    </div>
+
+
+                    <div class="widget-knob">
+                        <span class="overall" style="position:relative" data-percent="25">
+                            <span class="percent3"></span>
+                        </span>
+                    </div>
+                    <div class="widget-def">
+                        <b>Overall result</b>
+                        <br>
+                        <i>30KM/h avarage Result</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- END OF RIGHT SLIDER CONTENT-->
+
+
+
+    <!-- MAIN EFFECT -->
+<script type="text/javascript">
+    $("#li_aqi").click(function () {
+        var rowval = parseInt($("#rownum").html())
+        var colval = parseInt($("#colnum").html())
+        window.location.href="/bluecity/quaryaqi?row="+rowval+"&col="+colval;
+        return false;
+
+    });
+    $("#li_analyse_time").click(function () {
+        var rowval = parseInt($("#rownum").html())
+        var colval = parseInt($("#colnum").html())
+        window.location.href="/bluecity/analyse_time?row="+rowval+"&col="+colval;
+        return false;
+    })
+     $("#li_analyse_factor").click(function () {
+        var rowval = parseInt($("#rownum").html())
+        var colval = parseInt($("#colnum").html())
+        window.location.href="/bluecity/analyse_factor?row="+rowval+"&col="+colval;
+        return false;
+    })
+    $("#li_decisionsupport").click(function () {
+        var rowval = parseInt($("#rownum").html())
+        var colval = parseInt($("#colnum").html())
+        window.location.href="/bluecity/decisionsupport?row="+rowval+"&col="+colval;
+        return false;
+    })
+    $("#li_realtimefineprediction").click(function () {
+        var rowval = parseInt($("#rownum").html())
+        var colval = parseInt($("#colnum").html())
+        window.location.href="/bluecity/realtimefineprediction?row="+rowval+"&col="+colval;
+        return false;
+
+    })
+    $("#li_bestpath").click(function () {
+        var rowval = parseInt($("#rownum").html())
+        var colval = parseInt($("#colnum").html())
+        window.location.href="/bluecity/bestpath?row="+rowval+"&col="+colval;
+        return false;
+
+    })
+</script>
+
+
+</body>
+
+</html>

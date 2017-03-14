@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load staticfiles  %}
+{% block subtitle %}
+    影响因子分析
+{% endblock %}
+{% block description%}
+   分析给定区域不同影响因子对空气质量的影响程度,为智能决策提供支持
+{% endblock %}
+{% block content %}
+<script src="{% static "js/echarts.min.js" %}"></script>
+
+    <div class="container">
+         <div class="row">
+            <div class="col-md-5">
+                <div id="greycorr" style="height:400px"></div>
+            </div>
+            <div class="col-md-7">
+                <div class="alert alert-success" role="alert">
+                    时间相关影响因子:地面气温，地表气压，近地面空气比湿，近地面全风速，向下短波辐射，向下长波辐射，降水率等时间相关影响因子中地面气温，近地面空气比湿，近地面全风速，向下长波辐射，降水率对空气质量具有相对明显的影响作用,具有相对较差空气质量的时间通常具有较低的地面气温，近地面空气比湿，近地面全风速，向下长波辐射，降水率
+                </div>
+                <div class="alert alert-info" role="alert">
+                    空间相关影响因子:该地区具有较低的POI密度,较低的道路网密度以及较低的土地利用产污综合指数
+                </div>
+                <div class="alert alert-warning" role="alert">
+                    灰色关联理论评价:根据灰色关联理论,对该地区空气质量具有最重大影响的因子是风速
+                </div>
+
+
+        </div>
+    </div>
+    <div class="container">
+    <div class="row">
+         <div id="parallel1" style="height:400px"></div>
+    </div>
+    </div>
+
+
+
+    <div class="container">
+    <div class="row">
+
+    </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+       <div class="col-md-6">
+
+       </div>
+
+    </div>
+    </div>
+
+{% include "parallel1.html" %}
+{% include "greycorr.html" %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        var row = parseInt($("#rownum").text());
+        var col = parseInt($("#colnum").text());
+        $.get('analyse_factor/parallel1?row='+row+'&col='+col,function(data)
+		{
+            parallel1fun(data);
+        });
+    })
+    $(document).ready(function(){
+        var row = parseInt($("#rownum").text());
+        var col = parseInt($("#colnum").text());
+        $.get('analyse_factor/greycorr?row='+row+'&col='+col,function(data)
+		{
+            greycorrfun(data);
+        });
+    })
+</script>
+
+
+{% endblock %}

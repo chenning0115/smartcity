@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% load staticfiles  %}
+    <link href="{% static "pickadate/lib/themes/default.css" %}" rel="stylesheet">
+    <link href="{% static "pickadate/lib/themes/default.date.css" %}" rel="stylesheet">
+
+{% block subtitle %}
+    历史AQI信息
+{% endblock %}
+{% block description%}
+   利用随机森林模型对AQI空间分布进行精细化预测
+{% endblock %}
+{% block content %}
+    <link href="{% static "css/ol.css" %}" rel="stylesheet">
+    <script src="{% static "js/openlayer.js" %}" type="text/javascript"></script>
+    <script src="{% static "js/tools/tool.js" %}" type="text/javascript"></script>
+
+    <script src="{% static "pickadate/lib/picker.js" %}" type="text/javascript"></script>
+    <script src="{% static "pickadate/lib/picker.date.js" %}" type="text/javascript"></script>
+    <script src="{% static "pickadate/lib/legacy.js" %}" type="text/javascript"></script>
+    <style>
+    #map {
+        position: relative;
+        height: 900px;
+        width: 900px;
+      }
+    #popup{
+        width: 150px;
+    }
+    </style>
+
+<div class="alert alert-info row" role="alert">
+<div class="col-xs-5"></div>
+    <div class="col-xs-7">
+    <form class="form-inline">
+        <div class="form-group">
+            <!-- Single button -->
+            <select id="factor" class="form-control">
+                  <option value ="aqi_fin">AQI</option>
+                  <option value ="wind">风速</option>
+                  <option value="temp">温度</option>
+                  <option value="poi">POI</option>
+                  <option value="prec">降水率</option>
+                  <option value="pres">地表气压</option>
+                  <option value="sHum">近地面空气比湿</option>
+                  <option value="SRad">向下短波辐射</option>
+                  <option value="road">道路网密度</option>
+                  <option value="lucc">土地利用产污综合指数</option>
+
+            </select>
+            <input type="date" class="form-control" id="input_date" placeholder="2015-12-30" value="2015-12-31">
+                <button id="btn_date"type="button" class="btn btn-success">查   询</button>
+                <button id="btn_time"type="button" class="btn btn-success">动态展示</button>
+            </h4>
+        </div>
+    </form>
+    </div>
+</div>
+
+    <div id="map" class="map"></div>
+
+
+    <div style="display: none;">
+      <!-- Popup -->
+      <div id="popup" title="详细信息"></div>
+    </div>
+    <div></div>
+    <script>
+    var day = 730;
+    var factor = "aqi_fin";
+
+    //设置地图
+    var raster = new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+    var map = new ol.Map({
+        layers: [raster],
+        target: 'map',
+        view: new ol.View({
+          center: ol.proj.fromLonLat([116.303406,39.916263]),
+          zoom: 11
+        })
+      });
+
+
+    //添加网格
+    function createGrideLayer(url,fac){
+        var wkt =  $.ajax({
+               type: "GET",
+               url: url,
+               data: "",
+               async: false
+
+            }).responseText;
+        var wkts = wkt.split(";")
+        var features = new Array()
+        for(var i=0;i<wkts.length;i++){
+            var format = new ol.format.WKT();
+            var temps = wkts[i].split("&")
+            var feature = format.readFeature(temps[0], {
+                    dataProjection: 'EPSG:4326',
+                    featureProjection: 'EPSG:3857'
+                });
+            var ss = factor2colorstr(factor,temps[1],0.4);
+            var stl = new ol.style.Style({
+                fill: new ol.style.Fill({
+                color: ss
+                }),
+                stroke: new ol.style.Stroke({
+                color: 'rgba(255,255,255,0.2)',
+                width: 1
+                }),
+                text: new ol.style.Text({
+                font: '12px Calibri,sans-serif',
+                fill: new ol.style.Fill({
+                    color: '#000'
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#fff',
+                    width: 3
+                })
+                })
+                });
+            feature.setStyle(stl)
+            features[i] = feature
+        }
+
+
+        var vector = new ol.layer.Vector({
+                  source: new ol.source.Vector({features: features
+                        })
+                    });
+        return vector;
+    }
+
+    var gvl = createGrideLayer("/factorGrid/?day="+day+"&factor="+factor,factor);
+    map.addLayer(gvl);
+
+    //点击时弹出窗口
+    // Popup showing the position the user clicked
+      var popup = new ol.Overlay({
+        element: document.getElementById('popup')
+      });
+      map.addOverlay(popup);
+
+      map.on('click', function(evt) {
+
+        var element = popup.getElement();
+        var coordinate = evt.coordinate;
+        var hdms = ol.proj.transform(coordinate, 'EPSG:3857', 'EPSG:4326');
+        if(hdms[0] < 116.0975 || hdms[0] > 116.554 || hdms[1] < 39.7128 || hdms[1] > 40.123){
+            $(element).popover('destroy');
+            return;
+        }
+        var colIncre = (116.554 - 116.0975) / 39;
+        var rowIncre = (40.123 - 39.7128) / 35;
+        var colIndex = parseInt((hdms[0] - 116.0975) / colIncre);
+        var rowIndex = parseInt((40.123 - hdms[1]) / rowIncre);
+          $("#rownum").html(rowIndex)
+          $("#colnum").html(colIndex)
+        var date =   day
+        var datestr = date2ymdStr(date);
+        var aqi =  $.ajax({
+               type: "GET",
+               url: "/blockFactor/?date="+date+"&row="+rowIndex+"&col="+colIndex+"&factor="+factor,
+               async: false
+            }).responseText;
+        $(element).popover('destroy');
+        popup.setPosition(coordinate);
+        // the keys are quoted to prevent renaming in ADVANCED mode.
+
+        $(element).popover({
+          'placement': 'top',
+          'animation': false,
+          'html': true,
+          'content': '<p>'+datestr+'区块('+rowIndex+','+colIndex+')的'+factor2name(factor)+'是'+aqi+'</p>'+'<a href='+'"/timeseries?row='+rowIndex+'&col='+colIndex+'">查看时间序列</a>'
+        });
+        $(element).popover('show');
+      });
+
+
+    </script>
+
+
+<script type="text/javascript">
+
+$("#btn_date").bind('click', function(e) {
+    ymd = new Date($("#input_date").val());
+    day = ymd2date(ymd.getFullYear(), ymd.getMonth()+1,ymd.getDate());
+    factor = $("#factor").val();
+    map.removeLayer(gvl);
+
+    var element = popup.getElement();
+    $(element).popover('destroy');
+    gvl = createGrideLayer("/factorGrid/?day="+day+"&factor="+factor,factor);
+    map.addLayer(gvl);
+});
+function addDate(dd,dadd){
+var a = new Date(dd)
+a = a.valueOf()
+a = a + dadd * 24 * 60 * 60 * 1000
+a = new Date(a)
+return a;
+}
+function refreshmap(){
+    ymd = new Date($("#input_date").val());
+    ymd = addDate(ymd,1);
+    if(ymd.getFullYear()>2015) return;
+    var str = ymd.getFullYear()+'-'+(ymd.getMonth()+1)+'-'+ymd.getDate();
+    $("#input_date").val(str);
+    day = ymd2date(ymd.getFullYear(), ymd.getMonth()+1,ymd.getDate());
+    factor = $("#factor").val();
+    map.removeLayer(gvl);
+    var element = popup.getElement();
+    $(element).popover('destroy');
+    gvl = createGrideLayer("/factorGrid/?day="+day+"&factor="+factor,factor);
+    map.addLayer(gvl);
+}
+$("#btn_time").bind('click', function(e) {
+    window.setInterval("refreshmap()",1000);
+});
+
+</script>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load staticfiles  %}
+{% block subtitle %}
+    时间维度分析
+{% endblock %}
+{% block description%}
+   基于时间维度统计分析给定区域的空气质量总体变化趋势、周期性特点与规律
+{% endblock %}
+{% block content %}
+<script src="{% static "js/echarts.min.js" %}"></script>
+
+    <div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div id="dashboard" style="height:400px"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="alert alert-success" role="alert">
+                总体趋势:相比2014年,该地区2015年一级空气质量天数明显增多,六级空气质量天数少量增加,空气质量总体水平相对提升,前三个级别(一级、二级、三级)天数占全部历史数据的82.46%。
+            </div>
+            <div class="alert alert-info" role="alert">
+                周期性特点:该地区一级空气质量情况主要集中在1,2,3,8,9,10等月份,而四、五、六级较等差空气质量情况主要出现在11,12月份期间,平均来看,1,2,11,12等月份空气质量相对较差,从星期角度来看,并无明显规律
+            </div>
+            <div class="alert alert-warning" role="alert">
+                综合评价:该地区最终空气质量的综合得分为81分,在全部1365个方形区域中位列第65位
+            </div>
+
+
+    </div>
+    </div>
+    </div>
+    <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="yearlinechart" style="height:400px"></div>
+        </div>
+        <div class="col-md-4">
+            <div id="yearpiechart" style="height:400px"></div>
+        </div>
+
+    </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+           <div id="duidietu1" style="height:400px"></div>
+
+    </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+       <div id="aqihistory" style="height:400px"></div>
+    </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+       <div class="col-md-6">
+            <div id="temporaldensity" style="height:400px"></div>
+       </div>
+        <div class="col-md-6">
+            <div id="statetranmat" style="height:400px"></div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+    {% include "dashboard.html" %}
+    {% include "duidietu1.html" %}
+    {% include "aqihistory.html" %}
+    {% include "temporaldensity.html" %}
+    {% include "yearline.html" %}
+    {% include "yearpie.html" %}
+    {% include "StateTranMat.html" %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var row = parseInt($("#rownum").text());
+            var col = parseInt($("#colnum").text());
+            $.get('analyse_time/dashboard?row='+row+'&col='+col,function(data)
+            {
+                dashboardfun(data);
+            });
+            $.get('analyse_time/duidietu1?row='+row+'&col='+col,function(data)
+            {
+                duidietu1fun(data);
+            });
+            $.get('analyse_time/aqihistory?row='+row+'&col='+col,function(data)
+            {
+                aqihistoryfun(data);
+            });
+            $.get('analyse_time/temporaldensity?row='+row+'&col='+col,function(data)
+            {
+                temporaldensityfun(data);
+            });
+            $.get('analyse_time/yearline?row='+row+'&col='+col,function(data)
+            {
+                yearlinechartfun(data);
+            });
+            $.get('analyse_time/yearpie?row='+row+'&col='+col,function(data)
+            {
+                yearpiechartfun(data);
+            });
+             $.get('analyse_time/statetranmat?row='+row+'&col='+col,function(data)
+		    {
+                statetranmatfun(data);
+            });
+        })
+    </script>
+{% endblock %}

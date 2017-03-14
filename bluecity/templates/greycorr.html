@@ -1,0 +1,46 @@
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts图表
+
+        var greycorrChart = echarts.init(document.getElementById('greycorr'));
+        greycorrChart.showLoading();
+        function greycorrfun(mydata)
+        {
+            greycorrChart.hideLoading();
+             var dd = eval("("+mydata+")")
+             option = {
+    title: {
+        text: '基础雷达图'
+    },
+    tooltip: {},
+    radar: {
+        // shape: 'circle',
+        indicator: [
+           { name: '降水率', max: 1},
+           { name: '土地产污指数', max: 1},
+           { name: '兴趣点', max: 1},
+           { name: '风速', max: 1},
+           { name: '路网密度', max: 1},
+           { name: '向下短波辐射', max: 1},
+            { name: '地表气压', max: 1},
+           { name: '近地面空气比湿', max: 1},
+           { name: '向下长波辐射', max: 1},
+            { name: '温度', max: 1},
+        ]
+    },
+    series: [{
+        name: '预算 vs 开销（Budget vs spending）',
+        type: 'radar',
+        // areaStyle: {normal: {}},
+        data : [
+            {
+                value : dd.vals,
+                name : '灰色关联'
+            }
+        ]
+    }]
+};
+
+             greycorrChart.setOption(option);
+        }
+
+</script>

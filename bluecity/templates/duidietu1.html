@@ -1,0 +1,119 @@
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts图表
+
+        var duidietu1Chart = echarts.init(document.getElementById('duidietu1'));
+        duidietu1Chart.showLoading();
+        function duidietu1fun(mydata)
+        {
+            duidietu1Chart.hideLoading();
+             var dd = eval("("+mydata+")")
+             option = {
+                 backgroundColor: '',
+                 textStyle:{
+                   color:'#ffffff'
+                 },
+    title: {
+        text: 'AQI级别天数月变化',
+        textStyle:{
+                   color:'#ffffff'
+                 },
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['AQI级别1','AQI级别2','AQI级别3','AQI级别4','AQI级别5','AQI级别6'],
+        textStyle:{
+            color:"#ffffff"
+        }
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : dd.xaxis,
+            axisLabel:{
+                textStyle:{
+                    color:"#ffffff"
+                }
+            }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            name:'AQI级别1',
+            type:'line',
+            stack: '总量',
+            areaStyle: {normal: {}},
+            data:dd.aqi1
+        },
+        {
+            name:'AQI级别2',
+            type:'line',
+            stack: '总量',
+            areaStyle: {normal: {}},
+            data:dd.aqi2
+        },
+        {
+            name:'AQI级别3',
+            type:'line',
+            stack: '总量',
+            areaStyle: {normal: {}},
+            data:dd.aqi3
+        },
+        {
+            name:'AQI级别4',
+            type:'line',
+            stack: '总量',
+            areaStyle: {normal: {}},
+            data:dd.aqi4
+        },
+        {
+            name:'AQI级别5',
+            type:'line',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'top'
+                }
+            },
+            areaStyle: {normal: {}},
+            data:dd.aqi5
+        },
+        {
+            name:'AQI级别6',
+            type:'line',
+            stack: '总量',
+            label: {
+                normal: {
+                    show: true,
+                    position: 'top'
+                }
+            },
+            areaStyle: {normal: {}},
+            data:dd.aqi6
+        }
+    ]
+};
+
+             duidietu1Chart.setOption(option);
+        }
+
+</script>

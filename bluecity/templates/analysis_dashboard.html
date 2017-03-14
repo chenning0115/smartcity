@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load staticfiles  %}
+
+
+{% block subtitle %}
+    综合评分
+{% endblock %}
+
+{% block description%}
+    对同一区域一段时间内的空气质量进行综合评分
+{% endblock %}
+
+{% block content %}
+<script src="{% static "js/echarts.min.js" %}"></script>
+    {#综合分析#}
+<div class="container">
+<div class="row">
+           <div class="panel panel-default">
+            <div class="panel-body">
+                <div id="dashboard" style="height:400px"></div>
+            </div>
+        </div>
+        </div>
+</div>
+{% include "dashboard.html" %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        var row = parseInt($("#rownum").text());
+        var col = parseInt($("#colnum").text());
+        $.get('dashboard?row='+row+'&col='+col,function(data)
+		{
+            dashboardfun(data);
+        });
+    })
+</script>
+
+
+{% endblock %}

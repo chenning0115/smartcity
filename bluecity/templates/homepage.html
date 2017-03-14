@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+
+<link href='http://fonts.googleapis.com/css?family=Raleway:300' rel='stylesheet' type='text/css'>
+
+<!-- Latest compiled and minified CSS -->
+    {% load staticfiles  %}
+    <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
+    <link href="{% static "css/bootstrap-theme.min.css" %}" rel="stylesheet" >
+    <link href="{% static "css/style2.css" %}" rel="stylesheet" media="screen" >
+    <link rel="stylesheet" href="{% static "style.css" %}" type="text/css" charset="utf-8" />
+    <!-- main JS libs  -->
+	<script src="{% static "js/libs/modernizr.min.js" %}"></script>
+    <script src="{% static "js/libs/jquery-1.10.0.js" %}"></script>
+    <script src="{% static "js/libs/bootstrap.min.js" %}"></script>
+
+    <link href="{% static "css/font-awesome.min.css" %}" media="screen" rel="stylesheet">
+    <!-- scripts  -->
+    <script src="{% static "js/general.js" %}"></script>
+    <!-- oneByone slider -->
+    <link href="{% static "css/animate.css" %}" media="screen" rel="stylesheet">
+    <script src="{% static "js/jquery.onecarousel.min.js" %}"></script>
+    <!-- Placeholders -->
+    <script type="text/javascript" src="{% static "js/jquery.powerful-placeholder.min.js" %}"></script>
+
+</head>
+
+<body>
+
+
+<div class="background">
+
+	<div class="container">
+	
+    	<div class="slider-content">
+        	<h1>Sky Seeker</h1>
+            <h6>北京市空气质量智能分析与决策支持系统</h6>
+            <h6>北京大学 寻蓝者小组</h6>
+        </div>
+    
+	<div class="row">
+                <div class="col-sm-12">
+                    <div id="myCarousel" class="main-slider carousel slide">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="inner">
+                                    <div class="carousel-caption">
+                                        <!--<div class="slider_title" data-animate="flipInY">
+                                            <a href="#">Never underestimate the power of great UI design. It can win more clients in an instant</a>
+                                        </div>-->
+                                        <a href="/bluecity/quaryaqi?row=1&col=1" class="btn btn-brown" data-animate="fadeInDown"><span>进入系统</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="inner">
+                                    <div class="carousel-caption">
+                                        <!--<div class="slider_title" data-animate="bounceIn">
+                                            <a href="#">Lorem Ipsum is simply dummy text of the printing  and typesetting industry the standard</a>
+                                        </div>-->
+                                        <a href="/bluecity/quaryaqi?row=1&col=1" class="btn btn-brown" data-animate="rotateIn"><span>进入系统</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="inner">
+                                    <div class="carousel-caption">
+                                        <!--<div class="slider_title" data-animate="lightSpeedIn">
+                                            <a href="#">We help your business connect better &amp; reach higher so that everyday i'm shuffling</a>
+                                        </div>-->
+                                        <a href="/bluecity/quaryaqi?row=1&col=1" class="btn btn-brown" data-animate="rollIn"><span>进入系统</span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="left carousel-control" href="#myCarousel" data-slide="prev"></a>
+                        <a class="right carousel-control" href="#myCarousel" data-slide="next"></a>
+                    </div>
+
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $('#myCarousel').oneCarousel({
+                                easeIn: 'rotateIn',
+                                interval: 5000,
+                                pause: 'hover'
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+		</div>
+        <!--/ container -->
+        
+</div>
+<!--/ background -->
+
+
+<div class="content-st">
+
+	<div class="container">
+    	<h1>精细化的空间预测功能</h1>
+        <h4>突破监测基站位置约束</h4>
+        
+        <p>基于随机森林模型对空气质量相关影响因子进行建模,从而获取较为精细的AQI空间分布信息</p>
+        <a href="/bluecity/quaryaqi?row=1&col=1" class="content-st-btn">空间查询入口</a>
+        
+    </div>
+
+</div>
+<!--/ content-st -->
+
+<div class="content-nd">
+
+	<div class="container">
+    	<div class="row">
+        	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+            	<div class="box">
+                	<i class="fa fa-tablet fa-5x"></i>
+
+                    <h2>时间维度分析</h2>
+                    <p>基于时间维度统计分析给定区域的空气质量总体变化趋势、周期性特点与规律</p>
+
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+            	<div class="box">
+                	<i class="fa fa-laptop fa-5x"></i>
+
+                    <h2>影响因子分析</h2>
+                    <p>分析给定区域不同影响因子对空气质量的影响程度,为智能决策提供支持</p>
+
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+            	<div class="box">
+                	<i class="fa fa-cogs fa-5x"></i>
+
+                    <h2>智能决策支持</h2>
+                    <p>通过多角度分析,对给定区域空气质量进行综合评判,并给出决策建议</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{#<div class="content-sx">#}
+{#	<div class="container">#}
+{##}
+{#        <div class="row">#}
+{#        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">#}
+{#        	<div class="img-right">#}
+{#        		<img src="{% static "img/phone_small1.png" %}" alt="phone-small" />#}
+{#        	</div>#}
+{#        </div>#}
+{##}
+{#        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">#}
+{##}
+{#            <div class="right-text">#}
+{#            	<h1>时间维度分析</h1>#}
+{##}
+{#                <ul>#}
+{#                	<li>#}
+{#                    	<div class="left-icon"><img src="{% static "img/icon-1.png" %}" alt="pic-1" /></div>#}
+{#                        <div class="text-right">#}
+{#                        	<h4>总体趋势分析</h4>#}
+{#                            <p>Titles are appropriately sized and are darker giving a good visual hierachy to your page and content.</p>#}
+{#                        </div>#}
+{#                    </li>#}
+{#                    <li>#}
+{#                    	<div class="left-icon"><img src="{% static "img/icon-2.png" %}" alt="pic-2" /></div>#}
+{#                        <div class="text-right">#}
+{#                        	<h4>Retina Support</h4>#}
+{#                            <p>Titles are appropriately sized and are darker giving a good visual hierachy to your page and content.</p>#}
+{#                        </div>#}
+{#                    </li>#}
+{#                </ul>#}
+{##}
+{#            </div>#}
+{#            <!--/ right-text -->#}
+{#        </div>#}
+{#       </div><!--/ row-->#}
+{##}
+{#    </div>#}
+{#</div>#}
+{#<!--/ content-sx -->#}
+{##}
+{#<div class="content-ft">#}
+{#	#}
+{#    <div class="container">#}
+{#    	<div class="row">#}
+{#        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">#}
+{#        	<div class="right-text">#}
+{#            	<h1>影响因子分析</h1>#}
+{#                #}
+{#                <ul>#}
+{#                	<li>#}
+{#                    	<div class="left-icon"><img src="{% static "img/icon-1.png" %}" alt="pic-1" /></div>#}
+{#                        <div class="text-right">#}
+{#                        	<h4>Retina Support</h4>#}
+{#                            <p>Titles are appropriately sized and are darker giving a good visual hierachy to your page and content.</p>#}
+{#                        </div>#}
+{#                    </li>#}
+{#                    <li>#}
+{#                    	<div class="left-icon"><img src="{% static "img/icon-2.png" %}" alt="pic-2" /></div>#}
+{#                        <div class="text-right">#}
+{#                        	<h4>Retina Support</h4>#}
+{#                            <p>Titles are appropriately sized and are darker giving a good visual hierachy to your page and content.</p>#}
+{#                        </div>#}
+{#                    </li>#}
+{#                </ul>#}
+{#                #}
+{#            </div>#}
+{#            <!--/ right-text -->#}
+{#        </div>#}
+{#        #}
+{#        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">#}
+{#        	<div class="img-right">#}
+{#        		<img src="{% static "img/phone_small.png" %}" alt="phone-small" />#}
+{#        	</div>#}
+{#        </div>#}
+{#       </div><!--/ row-->#}
+{#    </div>#}
+{#    #}
+{#</div>#}
+{#<!--/ content-ft -->#}
+{##}
+{#<div class="content-sx">#}
+{#	<div class="container">#}
+{#    	#}
+{#        <div class="row">#}
+{#        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">#}
+{#        	<div class="img-right">#}
+{#        		<img src="{% static "img/phone_small1.png" %}" alt="phone-small" />#}
+{#        	</div>#}
+{#        </div>#}
+{#        #}
+{#        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">#}
+{#        	#}
+{#            <div class="right-text">#}
+{#            	<h1>智能决策支持</h1>#}
+{#                #}
+{#                <ul>#}
+{#                	<li>#}
+{#                    	<div class="left-icon"><img src="{% static "img/icon-1.png" %}" alt="pic-1" /></div>#}
+{#                        <div class="text-right">#}
+{#                        	<h4>Retina Support</h4>#}
+{#                            <p>Titles are appropriately sized and are darker giving a good visual hierachy to your page and content.</p>#}
+{#                        </div>#}
+{#                    </li>#}
+{#                    <li>#}
+{#                    	<div class="left-icon"><img src="{% static "img/icon-2.png" %}" alt="pic-2" /></div>#}
+{#                        <div class="text-right">#}
+{#                        	<h4>Retina Support</h4>#}
+{#                            <p>Titles are appropriately sized and are darker giving a good visual hierachy to your page and content.</p>#}
+{#                        </div>#}
+{#                    </li>#}
+{#                </ul>#}
+{#                #}
+{#            </div>#}
+{#            <!--/ right-text -->#}
+{#        </div>#}
+{#       </div><!--/ row-->#}
+{#        #}
+{#    </div>#}
+{#</div>#}
+<!--/ content-sx -->
+
+
+ 
+    <div class="footer">
+    	
+        <div class="container">
+    
+    			<div class="row">
+                    <div class="col-sm-12">
+                        <ul class="footer-social">
+                            <li><a href="#" class="social-facebook"><span>Facebook</span></a></li>
+                            <li><a href="#" class="social-pinterest"><span>Pinterest</span></a></li>
+                            <li><a href="#" class="social-twitter"><span>Twitter</span></a></li>
+                        </ul>
+                        <div class="copyright">Developed by SkySeeker Group of Peking University <a href="http://themefuse.com">@2016</a></div>
+                    </div>
+                </div>
+                <!--/ row -->
+                
+         </div>
+    </div><!--/ footer-->
+
+</body>
+</html>

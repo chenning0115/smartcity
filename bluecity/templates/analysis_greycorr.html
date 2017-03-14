@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load staticfiles  %}
+
+
+{% block subtitle %}
+    平行坐标图
+{% endblock %}
+
+{% block description%}
+    同一个区域一段时间内AQI和影响因素
+{% endblock %}
+
+{% block content %}
+<script src="{% static "js/echarts.min.js" %}"></script>
+    {#格子730条数据平行坐标图#}
+<div class="container">
+<div class="row">
+           <div class="panel panel-default">
+            <div class="panel-body">
+                <div id="greycorr" style="height:400px"></div>
+            </div>
+        </div>
+        </div>
+</div>
+{% include "greycorr.html" %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        var row = parseInt($("#rownum").text());
+        var col = parseInt($("#colnum").text());
+        $.get('greycorr?row='+row+'&col='+col,function(data)
+		{
+            greycorrfun(data);
+        });
+    })
+</script>
+
+
+{% endblock %}

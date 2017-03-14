@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load staticfiles  %}
+
+
+{% block subtitle %}
+    历史AQI
+{% endblock %}
+
+{% block description%}
+    同一区域的历史AQI信息
+{% endblock %}
+
+{% block content %}
+<script src="{% static "js/echarts.min.js" %}"></script>
+    {#综合分析#}
+<div class="container">
+<div class="row">
+           <div class="panel panel-default">
+            <div class="panel-body">
+                <div id="aqihistory" style="height:400px"></div>
+            </div>
+        </div>
+        </div>
+</div>
+{% include "aqihistory.html" %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        var row = parseInt($("#rownum").text());
+        var col = parseInt($("#colnum").text());
+        $.get('aqihistory?row='+row+'&col='+col,function(data)
+		{
+            aqihistoryfun(data);
+        });
+    })
+</script>
+
+
+{% endblock %}

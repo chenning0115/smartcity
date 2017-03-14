@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load staticfiles  %}
+
+
+{% block subtitle %}
+    AQI月变化堆叠图
+{% endblock %}
+
+{% block description%}
+    同一个区域一段时间内每个月各个AQI级别的天数变化
+{% endblock %}
+
+{% block content %}
+<script src="{% static "js/echarts.min.js" %}"></script>
+    {#单个格子AQI月变化堆叠图#}
+<div class="container">
+<div class="row">
+           <div class="panel panel-default">
+            <div class="panel-body">
+                <div id="duidietu1" style="height:400px"></div>
+            </div>
+        </div>
+        </div>
+</div>
+{% include "duidietu1.html" %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        var row = parseInt($("#rownum").text());
+        var col = parseInt($("#colnum").text());
+        $.get('duidietu1?row='+row+'&col='+col,function(data)
+		{
+            duidietu1fun(data);
+        });
+    })
+</script>
+
+
+{% endblock %}
